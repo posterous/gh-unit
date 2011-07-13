@@ -81,21 +81,28 @@
 @end
 
 
-@interface GHAsyncConnectionTestCaseTest : GHAsyncTestCase { }
+@interface GHAsyncExceptionTest : GHAsyncTestCase { }
 @end
 
-@implementation GHAsyncConnectionTestCaseTest
+@implementation GHAsyncExceptionTest
 
-- (void)_testURLConnection {
+- (BOOL)shouldRunOnMainThread {
+  return YES;
+}
+
+- (void)test_EXPECTED {
   [self prepare];
-  NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.google.com"]];
-  [[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES] retain];
-  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:30.0];
+  [self performSelectorInBackground:@selector(_delayedRaise) withObject:nil];
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:1.0];
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-  [self notify:kGHUnitWaitStatusSuccess forSelector:@selector(testURLConnection)];
+- (void)_delayedRaise {
+  [self performSelectorOnMainThread:@selector(_raiseException) withObject:nil waitUntilDone:YES];
 }
 
+- (void)_raiseException {
+  [NSException raise:NSGenericException format:@"Test exception"];
+}
+   
 @end
 

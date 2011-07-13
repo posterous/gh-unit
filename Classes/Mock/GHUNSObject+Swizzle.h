@@ -27,10 +27,16 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@interface NSObject (GHUSwizzle)
+//! @cond DEV
+
+#import <Foundation/Foundation.h>
+
+@interface NSObject(GHUSwizzle)
 
 + (void)ghu_swizzleMethod:(SEL)original withMethod:(SEL)alternate;
 + (void)ghu_swizzleClassMethod:(SEL)original withClassMethod:(SEL)alternate;
 
 @end
+
+//! @endcond
 

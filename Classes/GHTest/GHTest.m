@@ -1,6 +1,6 @@
 //
 //  GHTest.m
-//  GHKit
+//  GHUnit
 //
 //  Created by Gabriel Handford on 1/18/09.
 //  Copyright 2009. All rights reserved.
@@ -27,10 +27,13 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+//! @cond DEV
+
 #import "GHTest.h"
 #import "GHTest+JUnitXML.h"
 
 #import "GHTesting.h"
+#import "GHTestCase.h"
 
 @interface GHTest ()
 - (void)_setLogWriter:(id<GHTestCaseLogWriter>)logWriter;
@@ -270,3 +273,5 @@ exception=exception_, status=status_, log=log_, identifier=identifier_, disabled
 }
 
 @end
+
+//! @endcond

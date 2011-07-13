@@ -1,6 +1,6 @@
 //
 //  GHUnitIOSTestMain.m
-//  GHUnitIPhone
+//  GHUnitIOS
 //
 //  Created by Gabriel Handford on 1/25/09.
 //  Copyright 2009. All rights reserved.
@@ -35,9 +35,9 @@
 #import <UIKit/UIKit.h>
 
 // If you are using the framework
-//#import <GHUnitIOS/GHUnitIOS.h>
+//#import <GHUnitIOS/GHUnit.h>
 // If you are using the static library and importing header files manually
-#import "GHUnitIOS.h"
+#import "GHUnit.h"
 
 // Default exception handler
 void exceptionHandler(NSException *exception) { 
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
   if (getenv("GHUNIT_CLI")) {
     retVal = [GHTestRunner run];
   } else {
-    retVal = UIApplicationMain(argc, argv, nil, @"GHUnitIPhoneAppDelegate");
+    retVal = UIApplicationMain(argc, argv, nil, @"GHUnitIOSAppDelegate");
   }
   [pool release];
   return retVal;

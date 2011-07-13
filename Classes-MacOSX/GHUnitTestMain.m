@@ -40,10 +40,6 @@ void exceptionHandler(NSException *exception) {
 int main(int argc, char *argv[]) {
 
   /*!
-   For debugging:
-   Go into the "Get Info" contextual menu of your (test) executable (inside the "Executables" group in the left panel of XCode). 
-   Then go in the "Arguments" tab. You can add the following environment variables:
-   
    Default:   Set to:
    NSDebugEnabled                        NO       "YES"
    NSZombieEnabled                       NO       "YES"
@@ -59,7 +55,6 @@ int main(int argc, char *argv[]) {
    
    For malloc debugging see: http://developer.apple.com/mac/library/documentation/Performance/Conceptual/ManagingMemory/Articles/MallocDebug.html
    */
-  
   NSSetUncaughtExceptionHandler(&exceptionHandler);
   
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];

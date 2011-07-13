@@ -25,6 +25,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+//! @cond DEV
+
 //
 // Portions of this file fall under the following license, marked with:
 // GTM_BEGIN : GTM_END
@@ -43,6 +45,8 @@
 //  License for the specific language governing permissions and limitations under
 //  the License.
 //
+
+#import "GHNSObject+Invocation.h"
 
 #import "GHTestRunner.h"
 #import "GHTestSuite.h"
@@ -103,7 +107,7 @@ operationQueue=operationQueue_;
 + (int)run {
   GHTestRunner *testRunner = [GHTestRunner runnerFromEnv];
   [testRunner runTests];
-  return testRunner.stats.failureCount; 
+  return (int)testRunner.stats.failureCount; 
 }
 
 - (void)setInParallel:(BOOL)inParallel {
@@ -132,7 +136,7 @@ operationQueue=operationQueue_;
   } else {
     [test_ run:options_];
   }
-  return self.stats.failureCount;
+  return (int)self.stats.failureCount;
 }
 
 - (NSTimeInterval)interval {
@@ -166,7 +170,8 @@ operationQueue=operationQueue_;
 }
 
 - (void)_log:(NSString *)message {
-  fputs([[message stringByAppendingString:@"\n"] UTF8String], stdout);
+  fputs([message UTF8String], stdout);
+  fputs("\n", stdout);
   fflush(stdout);
   
   if ([delegate_ respondsToSelector:@selector(testRunner:didLog:)])
@@ -177,7 +182,7 @@ operationQueue=operationQueue_;
 
 - (void)testDidStart:(id<GHTest>)test source:(id<GHTest>)source {
   if (![source conformsToProtocol:@protocol(GHTestGroup)]) {
-    [self log:[NSString stringWithFormat:@"%@ ", [source identifier]]];
+    [self log:[NSString stringWithFormat:@"Starting %@\n", [source identifier]]];
   }
   
   if ([delegate_ respondsToSelector:@selector(testRunner:didStartTest:)])
@@ -193,7 +198,7 @@ operationQueue=operationQueue_;
   
   if ([source status] != GHTestStatusCancelled) {
     if (![source conformsToProtocol:@protocol(GHTestGroup)]) {      
-      NSString *message = [NSString stringWithFormat:@"%@ (%0.3fs)\n", 
+      NSString *message = [NSString stringWithFormat:@" %@ (%0.3fs)\n\n", 
                            ([source stats].failureCount > 0 ? @"FAIL" : @"OK"), [source interval]]; 
       [self log:message];
     }
@@ -282,3 +287,5 @@ operationQueue=operationQueue_;
 }
 
 @end
+
+//! @endcond
